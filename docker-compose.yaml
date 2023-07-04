@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  react-app:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    stdin_open: true
+    ports:
+      - '3000:3000'
+    networks:
+      - youtube-app
+  api-server:
+    build: 
+      context: ./youtube-api
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    depends_on:
+      - mongo
+    networks:
+      - youtube-app
+  mongo:
+    image: mongo:latest
+    ports:
+      - '27017:27017'    
+    networks:
+      - youtube-app
+networks:
+  youtube-app:
+    driver: bridge
