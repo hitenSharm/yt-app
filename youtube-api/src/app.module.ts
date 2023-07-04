@@ -11,7 +11,7 @@ import { MongooseModule } from '@nestjs/mongoose';
   imports: [YoutubeModule,ScheduleModule.forRoot(),CronModule,ConfigModule.forRoot({isGlobal:true}),MongooseModule.forRootAsync({
     imports:[ConfigModule],
     useFactory:(configService:ConfigService)=>({
-      uri:configService.get('MONGO_URI'), //this is just config for mongo
+      uri:configService.get('MONGO_URI'), //this is just config for mongo and env variables
     }),
     inject:[ConfigService],
   })],
