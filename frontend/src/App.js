@@ -1,6 +1,6 @@
 import { Button, Col,  Input, Pagination, Row } from "antd";
 import { useEffect, useState } from "react";
-import { changeCron, fetchVideos, searchVideos } from "./api";
+import { changeCron, fetchVideos, refreshVideos, searchVideos } from "./api";
 import "./App.css";
 import { Video } from "./components/video";
 
@@ -14,6 +14,11 @@ function App() {
     const data = await searchVideos(page, sortOrder,searchQuery);
     setVideos(data);
   };
+
+  const refreshClient = async () =>{
+    const data=await refreshVideos(page,sortOrder,searchQuery);
+    setVideos(data);
+  }
 
 
   useEffect(() => {
@@ -81,7 +86,9 @@ function App() {
           }}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        {/* <Button type='primary' onClick={()=>{searchingVideos()}}>Search</Button> */}
+        <Button type='primary' onClick={()=>{refreshClient()}} style={{
+          marginLeft:'15px'
+        }}>Refresh</Button>
       </Row>
 
       <Row

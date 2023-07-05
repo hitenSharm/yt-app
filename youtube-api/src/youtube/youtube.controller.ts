@@ -24,4 +24,17 @@ export class YoutubeController {
     return this.youtubeService.searchVideos(page,query,sortBy);
   }
 
+  @Get('/refresh')
+  async refreshResults(@Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,@Query('sorted')sortBy:string,@Query('q') query?: string):Promise<Video[]>{
+    await this.youtubeService.fetchAndStoreVideos();
+    console.log("refreshed");
+    if(query){
+      //fetch and return based on search
+      return this.youtubeService.searchVideos(page,query,sortBy);
+    }else{
+      //simple fetch and return
+      return this.youtubeService.getStoredVideosPaginated(page,sortBy);
+    }
+  }
+
 }

@@ -44,3 +44,19 @@ export const searchVideos = async (page, sortOrder,searchQuery) => {
     console.log(error);
   }
 };
+
+export const refreshVideos = async(page,sortOrder,searchQuery)=>{
+   try {
+    let newApiLink=apiLink+"youtube/refresh";
+    const response = await axios.get(newApiLink,{
+      params:{
+        page,
+        sorted:sortOrder,
+        q:searchQuery
+      },
+    });
+    return response.data;
+   } catch (err) {
+      console.error(err);
+   }
+}
